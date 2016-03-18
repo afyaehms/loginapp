@@ -1,12 +1,12 @@
 package org.openmrs.module.loginapp.domain;
 
 import org.openmrs.Location;
-import org.openmrs.Role;
+import org.springframework.util.Assert;
 
-public class LocationRole {
+public class LocationRoleMapping {
 
 	private Integer id;
-	private Role role;
+	private String roleName;
 	private Location location;
 	private Boolean preferred;
 
@@ -18,12 +18,13 @@ public class LocationRole {
 		this.id = id;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		Assert.notNull(roleName, "role name must not be null");
+		this.roleName = roleName;
 	}
 
 	public Location getLocation() {
@@ -31,6 +32,7 @@ public class LocationRole {
 	}
 
 	public void setLocation(Location location) {
+		Assert.notNull(location, "location must not be null");
 		this.location = location;
 	}
 

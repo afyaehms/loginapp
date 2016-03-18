@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <location location_id="900" name="General OPD" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="17287e4b-ece0-11e5-811c-34e6d77c15d6"/>
+  <location location_id="901" name="General Triage" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="6e6c7c4a-ed03-11e5-811c-34e6d77c15d6"/>
+  <location location_id="902" name="Laboratory 1" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="e65d1508-ed13-11e5-811c-34e6d77c15d6"/>
+  <location location_id="903" name="Laboratory 2" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="dc7cabab-ed13-11e5-811c-34e6d77c15d6"/>
+  <location location_id="904" name="Pharmacy 2" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="344a0463-ed16-11e5-811c-34e6d77c15d6"/>
+  <location location_id="905" name="Pharmacy 2" parent_location="[NULL]" description="test description" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="2e6dcf09-ed16-11e5-811c-34e6d77c15d6"/>
+  <location_tag location_tag_id="800" name="General Hospital" description="test desc" creator="1" date_created="2005-01-01 00:00:00.0" retired="false" uuid="25225d33-ece0-11e5-811c-34e6d77c15d6"/>
+  <location_tag_map location_id="900" location_tag_id="800" />
+  <location_tag_map location_id="901" location_tag_id="800" />
+  <location_tag_map location_id="902" location_tag_id="800" />
+  <location_tag_map location_id="903" location_tag_id="800" />
+  <location_tag_map location_id="904" location_tag_id="800" />
+  <location_tag_map location_id="905" location_tag_id="800" />
+</dataset>
