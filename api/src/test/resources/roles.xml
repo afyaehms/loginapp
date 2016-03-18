@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <role role="General OPD Role" description="Map to General OPD location" uuid="713ccd60-ecdf-11e5-811c-34e6d77c15d6" />
+  <role role="Lab Role" description="Map to Lab location" uuid="150501da-ed16-11e5-811c-34e6d77c15d6" />
+  <role role="Pharm Role" description="Map to Pharm location" uuid="09389607-ed16-11e5-811c-34e6d77c15d6" />
+</dataset>
