@@ -4,18 +4,18 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    <changeSet id="create_table_location_role" author="G Wasilwa">
+    <changeSet id="create_table_location_role_map" author="G Wasilwa">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="afyaehms_location_role"/>
+                <tableExists tableName="afyaehms_location_role_map"/>
             </not>
         </preConditions>
 
         <comment >
-            Create table location role, for linking roles to locations
+            Create table for mapping roles to login locations
         </comment>
 
-        <createTable tableName="afyaehms_location_role">
+        <createTable tableName="afyaehms_location_role_map">
 
             <column name="location_role_id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -33,10 +33,10 @@
 
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="afyaehms_location_role" baseColumnNames="location_id"
+        <addForeignKeyConstraint baseTableName="afyaehms_location_role_map" baseColumnNames="location_id"
                                  constraintName="fk_location"
                                  referencedTableName="location" referencedColumnNames="location_id" />
-        <addForeignKeyConstraint baseTableName="afyaehms_location_role" baseColumnNames="role_name"
+        <addForeignKeyConstraint baseTableName="afyaehms_location_role_map" baseColumnNames="role_name"
                                  constraintName="fk_role"
                                  referencedTableName="role" referencedColumnNames="role" />
     </changeSet>

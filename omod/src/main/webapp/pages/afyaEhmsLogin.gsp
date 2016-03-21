@@ -37,10 +37,13 @@
 	</head>
 	
 	<body>
+
+	${ ui.includeFragment("referenceapplication", "infoAndErrorMessages") }
+
 		<div class="outline" id="frame">
 			<h1>Afya EHMS</h1>
 			
-			<form id="form-login">
+			<form id="form-login" method="post">
 				<fieldset class="input">
 					<p id="form-login-username">
 						<label for="username">User Name</label>
@@ -60,7 +63,7 @@
 					
 					<p id="form-submit">
 						<label for="give"><span style="color:#FFF">&nbsp;</span></label>
-						<input type="submit" value="Log in" class="button" name="Submit">
+						<input type="submit" class="button" name="Submit">
 					</p>
 				</fieldset>
 			</form>
