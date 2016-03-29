@@ -16,6 +16,7 @@ import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.PageRequest;
+import org.openmrs.util.OpenmrsConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -62,12 +63,22 @@ public class AfyaEhmsLoginPageController {
 			Context.authenticate(username, password);
 			
 			if (Context.isAuthenticated()) {
-				Set<Role> authenticatedUserRoles = Context.getAuthenticatedUser().getAllRoles();
+				Integer defaultLocationId = null;
 				Location location = null;
-				for (Role role : authenticatedUserRoles) {
-					location = Context.getService(LocationRoleMappingService.class).getLocationByRole(role.getName());
-					if (location != null && location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
-						break;
+				try {
+					defaultLocationId = Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
+					location = Context.getLocationService().getLocation(defaultLocationId);
+				} catch (Exception e) {
+					//do nothing
+				}
+				
+				if (location == null || !location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
+					Set<Role> authenticatedUserRoles = Context.getAuthenticatedUser().getAllRoles();
+					for (Role role : authenticatedUserRoles) {
+						location = Context.getService(LocationRoleMappingService.class).getLocationByRole(role.getName());
+						if (location != null && location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
+							break;
+						}
 					}
 				}
 				
