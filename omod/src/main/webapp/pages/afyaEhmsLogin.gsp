@@ -63,7 +63,7 @@
 					
 					<p id="form-submit">
 						<label for="give"><span style="color:#FFF">&nbsp;</span></label>
-						<input type="submit" class="button" name="Submit">
+						<input type="submit" class="button" name="Submit" value="Login">
 					</p>
 				</fieldset>
 			</form>
