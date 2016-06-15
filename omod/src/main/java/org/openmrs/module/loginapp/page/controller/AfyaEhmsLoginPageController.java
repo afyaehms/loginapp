@@ -66,32 +66,18 @@ public class AfyaEhmsLoginPageController {
 				Integer defaultLocationId = null;
 				Location location = null;
 				try {
+					String userlocationstr = OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION;
 					defaultLocationId = Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
 					location = Context.getLocationService().getLocation(defaultLocationId);
-				} catch (Exception e) {
-					//do nothing
-				}
-				
-				if (location == null || !location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
-					Set<Role> authenticatedUserRoles = Context.getAuthenticatedUser().getAllRoles();
-					for (Role role : authenticatedUserRoles) {
-						location = Context.getService(LocationRoleMappingService.class).getLocationByRole(role.getName());
-						if (location != null && location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
-							break;
-						}
-					}
-				}
-				
-				if (location != null) {
 					pageRequest.setCookieValue(COOKIE_NAME_LAST_SESSION_LOCATION, location.getLocationId().toString());
 					sessionContext.setSessionLocation(location);
-					
+
 					if (StringUtils.isNotBlank(redirectUrl)) {
 						//don't redirect back to the login page on success nor an external url
 						if (!redirectUrl.contains("login.")) {
 							if (log.isDebugEnabled())
 								log.debug("Redirecting user to " + redirectUrl);
-							
+
 							return "redirect:" + redirectUrl;
 						} else {
 							if (log.isDebugEnabled())
@@ -99,12 +85,11 @@ public class AfyaEhmsLoginPageController {
 						}
 					}
 					return "redirect:" + ui.pageLink(ReferenceApplicationConstants.MODULE_ID, "home");
-				} else {
+				} catch (Exception e) {
 					Context.logout();
 					pageRequest.getSession().setAttribute(SESSION_ATTRIBUTE_ERROR_MESSAGE,
-						ui.message("afyaehms.error.location.setup"));
+							ui.message("afyaehms.error.location.setup"));
 				}
-				
 			}
 			
 		} catch (ContextAuthenticationException e) {
