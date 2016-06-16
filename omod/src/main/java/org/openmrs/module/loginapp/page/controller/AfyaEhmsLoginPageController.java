@@ -10,7 +10,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.emrapi.EmrApiConstants;
-import org.openmrs.module.loginapp.service.LocationRoleMappingService;
 import org.openmrs.module.referenceapplication.ReferenceApplicationConstants;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;

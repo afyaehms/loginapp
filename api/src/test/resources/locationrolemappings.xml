@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<dataset>
-  <afyaehms_location_role_map location_role_id="1" preferred="false" role_name="General OPD Role" location_id="900" />
-  <afyaehms_location_role_map location_role_id="2" preferred="true" role_name="General OPD Role" location_id="901" />
-  <afyaehms_location_role_map location_role_id="3" preferred="false" role_name="Lab Role" location_id="902" />
-  <afyaehms_location_role_map location_role_id="4" preferred="false" role_name="Lab Role" location_id="903" />
-  <afyaehms_location_role_map location_role_id="5" preferred="true" role_name="Pharm Role" location_id="904" />
-  <afyaehms_location_role_map location_role_id="6" preferred="true" role_name="Pharm Role" location_id="905" />
-</dataset>
