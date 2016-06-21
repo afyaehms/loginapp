@@ -27,6 +27,7 @@ public class AfyaEhmsLoginPageController {
 	private static final String SESSION_ATTRIBUTE_REDIRECT_URL = "_REFERENCE_APPLICATION_REDIRECT_URL_";
 	private static final String REQUEST_PARAMETER_NAME_REDIRECT_URL = "redirectUrl";
 	private static final String SESSION_ATTRIBUTE_ERROR_MESSAGE = "_REFERENCE_APPLICATION_ERROR_MESSAGE_";
+	private static final int UNKNOWN_LOCATION_ID = 1;
 	
 	protected Logger log = LoggerFactory.getLogger(AfyaEhmsLoginPageController.class);
 
@@ -66,7 +67,14 @@ public class AfyaEhmsLoginPageController {
 				Location location = null;
 				try {
 					String userlocationstr = OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION;
-					defaultLocationId = Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
+					String defaultLocationString = Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
+					if (StringUtils.isEmpty(defaultLocationString))
+					{
+						defaultLocationId = UNKNOWN_LOCATION_ID;
+					}
+					else{
+						defaultLocationId = Integer.parseInt(defaultLocationString);
+					}
 					location = Context.getLocationService().getLocation(defaultLocationId);
 					pageRequest.setCookieValue(COOKIE_NAME_LAST_SESSION_LOCATION, location.getLocationId().toString());
 					sessionContext.setSessionLocation(location);
@@ -86,8 +94,9 @@ public class AfyaEhmsLoginPageController {
 					return "redirect:" + ui.pageLink(ReferenceApplicationConstants.MODULE_ID, "home");
 				} catch (Exception e) {
 					Context.logout();
+					e.printStackTrace();
 					pageRequest.getSession().setAttribute(SESSION_ATTRIBUTE_ERROR_MESSAGE,
-							ui.message("afyaehms.error.location.setup"));
+							ui.message("afyaehms.error.login.fail"));
 				}
 			}
 			
