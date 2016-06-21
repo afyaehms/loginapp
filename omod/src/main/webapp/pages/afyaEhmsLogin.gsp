@@ -12,7 +12,7 @@
 <html>
 	<head>
 		<title>Login</title>
-		<link rel="shortcut icon" href="../ms/uiframework/resource/loginapp/images/favicon.ico"/>
+		<link rel="shortcut icon" href="${ui.resourceLink('loginapp', 'images/favicon.ico')}">
 		
 		${ ui.resourceLinks() }
 		
