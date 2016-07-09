@@ -52,6 +52,7 @@ public class AfyaEhmsLoginPageController {
 	public String post(
 			@RequestParam(value = "username", required = false) String username,
 			@RequestParam(value = "password", required = false) String password,
+			@CookieValue(value = COOKIE_NAME_LAST_SESSION_LOCATION, required = false) String lastSessionLocationId,
 			@SpringBean("locationService") LocationService locationService, 
 			UiUtils ui, 
 			PageRequest pageRequest,
@@ -65,17 +66,25 @@ public class AfyaEhmsLoginPageController {
 			if (Context.isAuthenticated()) {
 				Integer defaultLocationId = null;
 				Location location = null;
+				Location lastSessionLocation = null;
 				try {
 					String userlocationstr = OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION;
 					String defaultLocationString = Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
-					if (StringUtils.isEmpty(defaultLocationString))
+
+					if(StringUtils.isNotEmpty(lastSessionLocationId)){
+						//fetch previous location from sessions
+						location = locationService.getLocation(Integer.valueOf(lastSessionLocationId));
+						//set default user location as location fetched from session
+						Context.getUserService().setUserProperty(Context.getAuthenticatedUser(),OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,lastSessionLocationId);
+					}
+					else if (StringUtils.isEmpty(defaultLocationString))
 					{
-						defaultLocationId = UNKNOWN_LOCATION_ID;
+						location = Context.getLocationService().getLocation(UNKNOWN_LOCATION_ID);
 					}
 					else{
-						defaultLocationId = Integer.parseInt(defaultLocationString);
+						location = Context.getLocationService().getLocation(Integer.parseInt(defaultLocationString));
 					}
-					location = Context.getLocationService().getLocation(defaultLocationId);
+
 					pageRequest.setCookieValue(COOKIE_NAME_LAST_SESSION_LOCATION, location.getLocationId().toString());
 					sessionContext.setSessionLocation(location);
 
