@@ -32,50 +32,123 @@
 			});
 			
 		</script>
+		
+		<style>
+			#header{
+				background: url("${ui.resourceLink('loginapp', 'images/banner.png')}") repeat-x scroll 0 0;
+				height: 93px;
+			}
+			#header div{
+				margin: auto;
+				max-width: 1000px;
+				text-align: left;
+			}
+			#header .breadcrumbs{
+				background: url("${ui.resourceLink('loginapp', 'images/banner-right.png')}") no-repeat scroll 0 0;
+				display: inline-block;
+				float: right;
+				height: 93px;
+				width: 300px;
+			}
+			#header .breadcrumbs .clr{
+				background: url("${ui.resourceLink('loginapp', 'images/banner-right-leaf.png')}") repeat-x scroll 0 0;
+				display: inline-block;
+				float: right;
+				height: 93px;
+				width: 250px;
+			}
+			.body{
+				margin: auto;
+				max-width: 1000px;
+				text-align: left;
+			}
+			.body .welcome{
+				display: inline-block;
+				padding: 30px 0 0 10px;
+				width: 60%;
+			}
+			.body .login-div{
+				border-top: 20px solid #3b9dd5;
+				float: right;
+				height: 330px;
+				margin: 20px 10px 0 0;
+				width: 360px;
+			}			
+			.login-div .login-border{
+				background: #fcfcfc none repeat scroll 0 0;
+				border-bottom: 2px solid #efefef;
+				border-left: 2px solid #efefef;
+				border-right: 2px solid #efefef;
+				height: 100%;
+				padding: 15px 30px;
+				
+			}
+			.login-form-title{
+				font-size: 22px;
+				font-weight: bold;
+			}
+			.login-form-descr{
+				font-size: 13px;
+				margin: 20px 0 30px 0;
+			}
+			.footer-div{
+				background: url("${ui.resourceLink('loginapp', 'images/footer.png')}") repeat-x scroll 0 0;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				height: 20px;
+			}
+		</style>
 
 		
 	</head>
 	
 	<body>
+		<div id="header">
+			<div class="logo">
+				<img src="${ui.resourceLink('loginapp', 'images/afyalogo-white.png')}"/>
+				
+				<div class="breadcrumbs">
+					<div class="clr">
+					</div>				
+				</div>
+			</div>
+		</div>
 
-	${ ui.includeFragment("referenceapplication", "infoAndErrorMessages") }
-
-		<div class="outline" id="frame">
-			<h1>Afya EHMS</h1>
+		${ ui.includeFragment("referenceapplication", "infoAndErrorMessages") }
+		
+		<div class="body">
+			<div class="welcome">
+				<img src="${ui.resourceLink('loginapp', 'images/welcome-mockup.png')}" />
+			</div>
 			
-			<form id="form-login" method="post">
-				<fieldset class="input">
-					<p id="form-login-username">
-						<label for="username">User Name</label>
-						<input type="text" size="18" alt="User Name" class="inputbox" id="username" name="username">
-					</p>
+			<div class="login-div">
+				<div class="login-border">				
+					<div class="login-form-title">Access the Afya EHMS</div>
+					<div class="login-form-descr">Please enter the username and password provided by your administrator.</div>
 					
-					<p id="form-login-password">
-						<label for="password">Password</label>
-						<input type="password" id="password" alt="Password" size="18" class="inputbox" name="password">
-					</p>
-					
-					<p id="form-login-remember">
-						<label for="remember">&nbsp;</label>
-						<input type="checkbox" id="remember" alt="Remember me" value="yes" class="inputbox" name="remember">
-						<span style="padding-left:5px; padding-top:2px; color:#666666; font-weight:bold;">Remember me</span>
-					</p>
-					
-					<p id="form-submit">
-						<label for="give"><span style="color:#FFF">&nbsp;</span></label>
-						<input type="submit" class="button" name="Submit" value="Login">
-					</p>
-				</fieldset>
-			</form>
+					<form id="form-login" method="post">
+						<fieldset class="input">
+							<p id="form-login-username">
+								<label for="username">User Name</label>
+								<input type="text" size="18" alt="User Name" class="inputbox" id="username" name="username">
+							</p>
+							
+							<p id="form-login-password">
+								<label for="password">Password</label>
+								<input type="password" id="password" alt="Password" size="18" class="inputbox" name="password">
+							</p>
+							
+							<p id="form-submit">								
+								<input type="submit" class="button" name="Submit" value="Log in">
+							</p>							
+						</fieldset>
+					</form>
+				</div>
+				
+			</div>
 		</div>
 		
-		<div id="sbox-overlay" aria-hidden="true" style="z-index: 65555; opacity: 0;" tabindex="-1">
-		</div>
-
-		<div id="sbox-window" role="dialog" aria-hidden="true" style="z-index: 65557;" class="shadow">
-			<div id="sbox-content" style="opacity: 0;"></div>
-			<a id="sbox-btn-close" href="#" role="button" aria-controls="sbox-window">
-			</a>
-	   </div>
+		<div class="footer-div"></div>
   </body>
 </html>
