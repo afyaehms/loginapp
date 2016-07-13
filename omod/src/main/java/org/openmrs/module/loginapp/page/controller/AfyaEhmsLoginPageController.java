@@ -74,8 +74,6 @@ public class AfyaEhmsLoginPageController {
 					if(StringUtils.isNotEmpty(lastSessionLocationId)){
 						//fetch previous location from sessions
 						location = locationService.getLocation(Integer.valueOf(lastSessionLocationId));
-						//set default user location as location fetched from session
-						Context.getUserService().setUserProperty(Context.getAuthenticatedUser(),OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,lastSessionLocationId);
 					}
 					else if (StringUtils.isEmpty(defaultLocationString))
 					{
