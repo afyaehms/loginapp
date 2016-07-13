@@ -92,11 +92,24 @@
 				margin: 20px 0 30px 0;
 			}
 			.footer-div{
-				background: url("${ui.resourceLink('loginapp', 'images/footer.png')}") repeat-x scroll 0 0;
+				background: url("${ui.resourceLink('loginapp', 'images/footer.png')}") repeat scroll 0 0;
 				position: fixed;
 				bottom: 0;
 				width: 100%;
-				height: 20px;
+			}
+			.footer-div div{
+				color: #fff;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: left;
+				padding: 5px;
+				margin: auto;
+				max-width: 1000px;
+			}
+			.footer-div span{
+				color: #fff;
+				float: right;
+				font-size: 12px;
 			}
 		</style>
 
@@ -149,6 +162,11 @@
 			</div>
 		</div>
 		
-		<div class="footer-div"></div>
+		<div class="footer-div">
+			<div>
+				Copyright &copy; 2016, Republic of Kenya, Ministry of Health
+				<span>Powered by OpenMRS</span>
+			</div>
+		</div>
   </body>
 </html>
