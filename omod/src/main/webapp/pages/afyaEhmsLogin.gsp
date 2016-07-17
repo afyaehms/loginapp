@@ -18,6 +18,7 @@
 		
 		<script>
 			var jq = jQuery;
+			var loginError;
 			
 			jq(function () {
 				var styleSheets = document.styleSheets;
@@ -29,6 +30,9 @@
 						break;
 					}
 				}
+				
+				loginError = jq('#error-message').text();
+				console.log(loginError);
 			});
 			
 		</script>
@@ -70,7 +74,7 @@
 			.body .login-div{
 				border-top: 20px solid #3b9dd5;
 				float: right;
-				height: 330px;
+				height: 400px;
 				margin: 20px 10px 0 0;
 				width: 360px;
 			}			
@@ -128,7 +132,9 @@
 			</div>
 		</div>
 
-		${ ui.includeFragment("referenceapplication", "infoAndErrorMessages") }
+		<div style="display: none;">
+			${ ui.includeFragment("referenceapplication", "infoAndErrorMessages") }
+		</div>
 		
 		<div class="body">
 			<div class="welcome">
@@ -157,6 +163,8 @@
 							</p>							
 						</fieldset>
 					</form>
+					
+					<div class="login-form-descr" style="margin: 20px 0 30px 3px; color: #555;">Click <a href="#">here</a> if you have forgotten your username or password.</div>
 				</div>
 				
 			</div>
