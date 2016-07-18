@@ -10,7 +10,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.emrapi.EmrApiConstants;
-import org.openmrs.module.loginapp.service.LocationRoleMappingService;
 import org.openmrs.module.referenceapplication.ReferenceApplicationConstants;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -28,6 +27,7 @@ public class AfyaEhmsLoginPageController {
 	private static final String SESSION_ATTRIBUTE_REDIRECT_URL = "_REFERENCE_APPLICATION_REDIRECT_URL_";
 	private static final String REQUEST_PARAMETER_NAME_REDIRECT_URL = "redirectUrl";
 	private static final String SESSION_ATTRIBUTE_ERROR_MESSAGE = "_REFERENCE_APPLICATION_ERROR_MESSAGE_";
+	private static final int UNKNOWN_LOCATION_ID = 1;
 	
 	protected Logger log = LoggerFactory.getLogger(AfyaEhmsLoginPageController.class);
 
@@ -52,6 +52,7 @@ public class AfyaEhmsLoginPageController {
 	public String post(
 			@RequestParam(value = "username", required = false) String username,
 			@RequestParam(value = "password", required = false) String password,
+			@CookieValue(value = COOKIE_NAME_LAST_SESSION_LOCATION, required = false) String lastSessionLocationId,
 			@SpringBean("locationService") LocationService locationService, 
 			UiUtils ui, 
 			PageRequest pageRequest,
@@ -65,33 +66,32 @@ public class AfyaEhmsLoginPageController {
 			if (Context.isAuthenticated()) {
 				Integer defaultLocationId = null;
 				Location location = null;
+				Location lastSessionLocation = null;
 				try {
-					defaultLocationId = Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
-					location = Context.getLocationService().getLocation(defaultLocationId);
-				} catch (Exception e) {
-					//do nothing
-				}
-				
-				if (location == null || !location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
-					Set<Role> authenticatedUserRoles = Context.getAuthenticatedUser().getAllRoles();
-					for (Role role : authenticatedUserRoles) {
-						location = Context.getService(LocationRoleMappingService.class).getLocationByRole(role.getName());
-						if (location != null && location.hasTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_LOGIN)) {
-							break;
-						}
+					String userlocationstr = OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION;
+					String defaultLocationString = Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
+
+					if(StringUtils.isNotEmpty(lastSessionLocationId)){
+						//fetch previous location from sessions
+						location = locationService.getLocation(Integer.valueOf(lastSessionLocationId));
 					}
-				}
-				
-				if (location != null) {
+					else if (StringUtils.isEmpty(defaultLocationString))
+					{
+						location = Context.getLocationService().getLocation(UNKNOWN_LOCATION_ID);
+					}
+					else{
+						location = Context.getLocationService().getLocation(Integer.parseInt(defaultLocationString));
+					}
+
 					pageRequest.setCookieValue(COOKIE_NAME_LAST_SESSION_LOCATION, location.getLocationId().toString());
 					sessionContext.setSessionLocation(location);
-					
+
 					if (StringUtils.isNotBlank(redirectUrl)) {
 						//don't redirect back to the login page on success nor an external url
 						if (!redirectUrl.contains("login.")) {
 							if (log.isDebugEnabled())
 								log.debug("Redirecting user to " + redirectUrl);
-							
+
 							return "redirect:" + redirectUrl;
 						} else {
 							if (log.isDebugEnabled())
@@ -99,12 +99,12 @@ public class AfyaEhmsLoginPageController {
 						}
 					}
 					return "redirect:" + ui.pageLink(ReferenceApplicationConstants.MODULE_ID, "home");
-				} else {
+				} catch (Exception e) {
 					Context.logout();
+					e.printStackTrace();
 					pageRequest.getSession().setAttribute(SESSION_ATTRIBUTE_ERROR_MESSAGE,
-						ui.message("afyaehms.error.location.setup"));
+							ui.message("afyaehms.error.login.fail"));
 				}
-				
 			}
 			
 		} catch (ContextAuthenticationException e) {

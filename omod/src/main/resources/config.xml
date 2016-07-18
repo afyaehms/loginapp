@@ -45,7 +45,6 @@
 	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
-		LocationRoleMapping.hbm.xml
 	</mappingFiles>
 
 	<!-- Internationalization -->
