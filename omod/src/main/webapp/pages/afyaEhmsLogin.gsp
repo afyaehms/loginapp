@@ -159,7 +159,7 @@
 							</p>
 							
 							<p id="form-submit">								
-								<input type="submit" class="button" name="Submit" value="Log in">
+								<input type="submit" class="button" name="Submit" value="Login">
 							</p>							
 						</fieldset>
 					</form>
